@@ -1,0 +1,4 @@
+data path:
+  train_data: "D:/dsmp/aws proj/data/train"
+  test_dat: "D:/dsmp/aws proj/data/test"
+sentence_num: 3

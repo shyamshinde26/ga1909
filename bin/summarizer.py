@@ -45,6 +45,13 @@ class SummarizeDoc:
         topnIdx=sortedIdx[-n:]
         topnSentences=[sentences[i] for i in topnIdx]
         return topnSentences
+    
+        def preprocess(self,text):
+        preprocessObj = PreprocessDoc()
+        filteredText = preprocessObj.removeSpclChar(text)
+        filteredText = preprocessObj.convertToLower(filteredText)
+        return filteredText
+    
     def findSummary(self):
         filePath=self.config['data_path']['train_data']
         text=self.loadDocs(filePath)

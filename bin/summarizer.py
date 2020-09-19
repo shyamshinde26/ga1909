@@ -51,7 +51,7 @@ class SummarizeDoc:
         sentences=self.splitSentences(text)
         firstSent, restOfSent = self.groupSentences(sentences)
         sentLengths=self.findSentLengthArray(restOfSent)
-        topnSentences=self.findTopsentences(sentLegths, restOfSent, self.config['sent_num'])
+        topnSentences=self.findTopsentences(sentLegths, restOfSent, self.config['sentence_num'])
         allSentences = [firstSent] + topnSentences
         summary = ' '.join(allSentences)
         return summary

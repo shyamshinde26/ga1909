@@ -7,6 +7,7 @@ Created on Sat Sep 19 13:13:14 2020
 
 import yaml
 import numpy as np
+from preprocessor import PreprocessDoc 
 class SummarizeDoc:
     
     def __init__(self):
@@ -14,7 +15,7 @@ class SummarizeDoc:
             self.config = yaml.load(fl)
         
     def loadDocs(self,filePath):
-        with open(filePath,'r') as fl:
+        with open(filePath,'r',encoding='utf-8') as fl:
             text = fl.read()
         return text
     
@@ -43,10 +44,10 @@ class SummarizeDoc:
     def findTopsentences(self,sentLegths,sentences,n):
         sortedIdx=np.argsort(sentLegths)
         topnIdx=sortedIdx[-n:]
-        topnSentences=[sentences[i] for i in topnIdx]
+        topnSentences= [sentences[i] for i in topnIdx]
         return topnSentences
     
-        def preprocess(self,text):
+    def preprocess(self,text):
         preprocessObj = PreprocessDoc()
         filteredText = preprocessObj.removeSpclChar(text)
         filteredText = preprocessObj.convertToLower(filteredText)
@@ -58,10 +59,11 @@ class SummarizeDoc:
         sentences=self.splitSentences(text)
         firstSent, restOfSent = self.groupSentences(sentences)
         sentLengths=self.findSentLengthArray(restOfSent)
-        topnSentences=self.findTopsentences(sentLegths, restOfSent, self.config['sentence_num'])
+        topnSentences=self.findTopsentences(sentLengths, restOfSent, self.config['sentence_num'])
         allSentences = [firstSent] + topnSentences
         summary = ' '.join(allSentences)
         return summary
 
 
 summarizeObj = SummarizeDoc()
+summary = summarizeObj.findSummary()

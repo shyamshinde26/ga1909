@@ -66,5 +66,6 @@ class SummarizeDoc:
         summary = '. '.join(allSentences)
         return summary
         
-#summarizeObj = SummarizeDoc()
-#summary = summarizeObj.findSummary()
+# summarizeObj = SummarizeDoc()
+# summary = summarizeObj.findSummary()
+# print(summary)

@@ -7,7 +7,8 @@ Created on Sat Sep 19 13:13:14 2020
 
 import yaml
 import numpy as np
-from preprocessor import PreprocessDoc 
+from preprocessor import PreprocessDoc
+
 class SummarizeDoc:
     
     def __init__(self):
@@ -38,13 +39,13 @@ class SummarizeDoc:
     def findSentLength(self,text):
         return text.split()
     
-    def findSentLengthArray(self,sentences):
+    def findSentLenghtArray(self,sentences):
         return [self.findSentLength(sent) for sent in sentences]
     
-    def findTopsentences(self,sentLegths,sentences,n):
-        sortedIdx=np.argsort(sentLegths)
-        topnIdx=sortedIdx[-n:]
-        topnSentences= [sentences[i] for i in topnIdx]
+    def findTopSentences(self,sentLengths,sentences,n):
+        sortedIdx = np.argsort(sentLengths)
+        topnIdx = sortedIdx[-n:]
+        topnSentences = [sentences[i] for i in topnIdx]
         return topnSentences
     
     def preprocess(self,text):
@@ -54,16 +55,16 @@ class SummarizeDoc:
         return filteredText
     
     def findSummary(self):
-        filePath=self.config['data_path']['train_data']
-        text=self.loadDocs(filePath)
-        sentences=self.splitSentences(text)
-        firstSent, restOfSent = self.groupSentences(sentences)
-        sentLengths=self.findSentLengthArray(restOfSent)
-        topnSentences=self.findTopsentences(sentLengths, restOfSent, self.config['sentence_num'])
+        filePath = self.config['data_path']['train_data']
+        text = self.loadDocs(filePath)
+        filteredText = self.preprocess(text)
+        sentences = self.splitSentences(filteredText)
+        firstSent,restOfSent = self.groupSentences(sentences)
+        sentLengths = self.findSentLenghtArray(restOfSent)
+        topnSentences = self.findTopSentences(sentLengths,restOfSent,self.config['sentence_num'])
         allSentences = [firstSent] + topnSentences
-        summary = ' '.join(allSentences)
+        summary = '. '.join(allSentences)
         return summary
-
-
-summarizeObj = SummarizeDoc()
-summary = summarizeObj.findSummary()
+        
+#summarizeObj = SummarizeDoc()
+#summary = summarizeObj.findSummary()
